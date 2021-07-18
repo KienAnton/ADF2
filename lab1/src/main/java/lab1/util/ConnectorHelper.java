@@ -1,0 +1,28 @@
+package lab1.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConnectorHelper {
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/%s?useUnicode=true&characterEncoding=utf-8";
+    private static final String DATABASE_NAME = "daily-news";
+    private static final String DATABASE_USER = "root";
+    private static final String DATABASE_PWD = "";
+    private static Connection cnn;
+
+    public static Connection getConnection(){
+        try {
+            if (cnn == null || cnn.isClosed()) {
+                cnn = DriverManager.getConnection(
+                        String.format(DATABASE_URL, DATABASE_NAME),
+                        DATABASE_USER,
+                        DATABASE_PWD);
+            }
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());;
+        }
+        return cnn;
+    }
+
+}
